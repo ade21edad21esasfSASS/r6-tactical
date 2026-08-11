@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>R6 INFILTRATOR · Strategy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Arial Narrow', sans-serif;
+            background: #0a0a0a;
+            color: #c8c8c8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        #waveCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            background: rgba(10, 10, 10, 0.82);
+            pointer-events: none;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px 40px;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: #111;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a5a3a;
+            border-radius: 0;
+            border: 1px solid #1a3a2a;
+        }
+
+        .site-header {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 0;
+            border-bottom: 2px solid rgba(29, 185, 84, 0.2);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .logo-icon {
+            font-size: 28px;
+            color: #5a8a6a;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        .logo-text {
+            font-size: 26px;
+            font-weight: 700;
+            color: #d4d4d4;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+            background: linear-gradient(180deg, #e0e0e0 30%, #5a8a6a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-sub {
+            font-size: 13px;
+            color: #5a7a5a;
+            font-weight: 300;
+            letter-spacing: 3px;
+            -webkit-text-fill-color: #5a7a5a;
+            background: none;
+            border-left: 1px solid #2a4a3a;
+            padding-left: 12px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .nav-links a {
+            color: #8a9a8a;
+            text-decoration: none;
+            transition: 0.2s;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links a:hover {
+            color: #d4e8d4;
+            border-bottom-color: #3a7a4a;
+            text-decoration: none;
+        }
+        .nav-links a.active {
+            color: #d4e8d4;
+            border-bottom-color: #3a7a4a;
+        }
+        .nav-links a.danger {
+            color: #8a5a5a;
+        }
+        .nav-links a.danger:hover {
+            color: #d46a6a;
+            border-bottom-color: #8a3a3a;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ddd;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+            margin: 40px 0 20px;
+            text-transform: uppercase;
+            border-left: 4px solid #888;
+            padding-left: 20px;
+        }
+        .page-title span {
+            color: #888;
+            font-weight: 300;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .card {
+            background: rgba(14, 18, 14, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(42, 74, 42, 0.2);
+            padding: 22px 20px;
+            transition: 0.3s;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+        }
+        .card:hover {
+            border-color: rgba(58, 122, 74, 0.5);
+            background: rgba(20, 28, 20, 0.9);
+        }
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #d0d8d0;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .card p {
+            color: #8a9a8a;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+        .card .meta {
+            font-size: 0.8rem;
+            color: #4a5a4a;
+            margin-top: 14px;
+            border-top: 1px solid rgba(42, 74, 42, 0.3);
+            padding-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .site-footer {
+            background: rgba(8, 10, 8, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 28px 0;
+            text-align: center;
+            color: #3a4a3a;
+            font-size: 12px;
+            border-top: 1px solid rgba(42, 74, 42, 0.15);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        .site-footer strong {
+            color: #5a7a5a;
+            font-weight: 600;
+        }
+        .site-footer .divider {
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: #2a3a2a;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+            .header-inner {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .logo {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .content {
+                padding: 0 16px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="waveCanvas"></canvas>
+    <div class="overlay"></div>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-icon">⛭</span>
+                <span class="logo-text">R6 INFILTRATOR</span>
+                <span class="logo-sub">TACTICAL + UNDERGROUND</span>
+            </div>
+            <nav class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="seasons.html">Seasons</a>
+                <a href="operators.html">Operators</a>
+                <a href="maps.html">Maps</a>
+                <a href="esports.html">Esports</a>
+                <a href="strategy.html" class="active">Strategy</a>
+                <a href="../cheats/index.html" class="danger">⚡ Cheats</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <h1 class="page-title">Tactical <span>Strategy Guide</span></h1>
+
+        <div class="strategy-grid">
+            <div class="card">
+                <h3>🗺️ Learn the Maps</h3>
+                <p>Room names appear on your HUD – use them for callouts. Study blueprints on the Ubisoft website to see soft walls, hatches, and destructible floors. Download floorplans and label them for a second-monitor cheat sheet.</p>
+                <div class="meta">🎯 Modernized maps: Emerald Plains, Kanal, Outback (2026)</div>
+            </div>
+            <div class="card">
+                <h3>👀 Jiggle Peeking &amp; Clearing</h3>
+                <p>Strafe and lean around a corner, then immediately return to cover – exposes minimal hitbox while gathering intel. When clearing a room, peek one angle at a time, from left-to-right or right-to-left depending on your door position.</p>
+            </div>
+            <div class="card">
+                <h3>🧱 Destruction is a Tool</h3>
+                <p>Turn walls into windows. Use Buck or Sledge to open unexpected sightlines. On defense, create rotates that support plant denial – don't copy old reinforce patterns blindly.</p>
+            </div>
+            <div class="card">
+                <h3>🎧 Audio &amp; Positioning</h3>
+                <p>Reverb and propagation updates help pinpoint enemy location. Use drones to confirm pathing before committing. Assign a flank watch before executing the plant – patience wins rounds.</p>
+            </div>
+            <div class="card">
+                <h3>💥 Utility Management</h3>
+                <p>Don't waste grenades, flashes, or smokes. Every piece of utility should have a purpose. Coordinate with your team – two flashes can clear a corner, one smoke can cover a plant.</p>
+                <div class="meta">Pro tip: Save at least one drone for post-plant</div>
+            </div>
+            <div class="card">
+                <h3>🔄 Rotations &amp; Re-frags</h3>
+                <p>If your teammate dies, trade the kill immediately. Set up crossfires – don't stack on one angle. On defense, rotate after each kill to stay unpredictable.</div>
+            </div>
+        </div>
+
+        <div style="margin-top:24px; padding:16px 20px; background:rgba(12,16,12,0.6); border:1px solid rgba(42,74,42,0.15); text-align:center;">
+            <p style="color:#5a6a5a; font-size:0.85rem;"><strong style="color:#7a8a7a;">💡 Golden Rule:</strong> Information wins rounds. Drone. Communicate. Adapt.</p>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p><strong>R6 INFILTRATOR</strong> <span class="divider"></span> Unofficial Tactical & Underground Dossier <span class="divider"></span> Built with Extreme Prejudice</p>
+            <p style="margin-top:6px; font-size:10px; color:#2a3a2a;">All trademarks belong to Ubisoft. Data sourced from official channels.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('waveCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height, time = 0;
+            const waves = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            function initWaves() {
+                for (let i = 0; i < 5; i++) {
+                    waves.push({
+                        amplitude: 15 + Math.random() * 35,
+                        frequency: 0.008 + Math.random() * 0.012,
+                        speed: 0.4 + Math.random() * 0.6,
+                        phase: Math.random() * Math.PI * 2,
+                        color: `hsla(${140 + Math.random() * 20}, ${30 + Math.random() * 30}%, ${15 + Math.random() * 20}%, ${0.15 + Math.random() * 0.25})`,
+                        thickness: 1.5 + Math.random() * 2
+                    });
+                }
+            }
+
+            function drawWaves() {
+                ctx.clearRect(0, 0, width, height);
+                const gradient = ctx.createLinearGradient(0, 0, 0, height);
+                gradient.addColorStop(0, '#0a1a0f');
+                gradient.addColorStop(0.4, '#0d1f12');
+                gradient.addColorStop(0.7, '#0a1a0f');
+                gradient.addColorStop(1, '#050d08');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, width, height);
+
+                for (let w = 0; w < waves.length; w++) {
+                    const wave = waves[w];
+                    ctx.beginPath();
+                    for (let x = 0; x <= width; x += 1) {
+                        const y = height * 0.65 +
+                            Math.sin(x * wave.frequency + time * wave.speed + wave.phase) * wave.amplitude +
+                            Math.sin(x * wave.frequency * 2.3 + time * wave.speed * 0.7 + wave.phase * 1.4) * (wave.amplitude * 0.3) +
+                            Math.sin(x * wave.frequency * 0.5 + time * wave.speed * 0.3 + wave.phase * 0.8) * (wave.amplitude * 0.5);
+                        if (x === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    const grad = ctx.createLinearGradient(0, height * 0.5, 0, height);
+                    const alpha = 0.15 + (w / waves.length) * 0.25;
+                    grad.addColorStop(0, `rgba(20, 50, 30, ${alpha * 0.3})`);
+                    grad.addColorStop(0.5, `rgba(15, 40, 25, ${alpha * 0.6})`);
+                    grad.addColorStop(1, `rgba(5, 15, 10, ${alpha * 0.9})`);
+                    ctx.lineTo(width, height);
+                    ctx.lineTo(0, height);
+                    ctx.closePath();
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+                    ctx.strokeStyle = wave.color;
+                    ctx.lineWidth = wave.thickness;
+                    ctx.shadowColor = 'rgba(29, 185, 84, 0.05)';
+                    ctx.shadowBlur = 10;
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+                }
+                const fogGrad = ctx.createLinearGradient(0, height * 0.8, 0, height);
+                fogGrad.addColorStop(0, 'rgba(10, 20, 15, 0)');
+                fogGrad.addColorStop(1, 'rgba(5, 15, 10, 0.5)');
+                ctx.fillStyle = fogGrad;
+                ctx.fillRect(0, height * 0.8, width, height * 0.2);
+                time += 0.008;
+                requestAnimationFrame(drawWaves);
+            }
+            window.addEventListener('resize', resize);
+            resize();
+            initWaves();
+            drawWaves();
+        })();
+    </script>
+</body>
+</html>
