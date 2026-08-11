@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>R6 INFILTRATOR · Maps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Arial Narrow', sans-serif;
+            background: #0a0a0a;
+            color: #c8c8c8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        #waveCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            background: rgba(10, 10, 10, 0.82);
+            pointer-events: none;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px 40px;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: #111;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a5a3a;
+            border-radius: 0;
+            border: 1px solid #1a3a2a;
+        }
+
+        .site-header {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 0;
+            border-bottom: 2px solid rgba(29, 185, 84, 0.2);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .logo-icon {
+            font-size: 28px;
+            color: #5a8a6a;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        .logo-text {
+            font-size: 26px;
+            font-weight: 700;
+            color: #d4d4d4;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+            background: linear-gradient(180deg, #e0e0e0 30%, #5a8a6a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-sub {
+            font-size: 13px;
+            color: #5a7a5a;
+            font-weight: 300;
+            letter-spacing: 3px;
+            -webkit-text-fill-color: #5a7a5a;
+            background: none;
+            border-left: 1px solid #2a4a3a;
+            padding-left: 12px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .nav-links a {
+            color: #8a9a8a;
+            text-decoration: none;
+            transition: 0.2s;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links a:hover {
+            color: #d4e8d4;
+            border-bottom-color: #3a7a4a;
+            text-decoration: none;
+        }
+        .nav-links a.active {
+            color: #d4e8d4;
+            border-bottom-color: #3a7a4a;
+        }
+        .nav-links a.danger {
+            color: #8a5a5a;
+        }
+        .nav-links a.danger:hover {
+            color: #d46a6a;
+            border-bottom-color: #8a3a3a;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ddd;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+            margin: 40px 0 20px;
+            text-transform: uppercase;
+            border-left: 4px solid #888;
+            padding-left: 20px;
+        }
+        .page-title span {
+            color: #888;
+            font-weight: 300;
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .map-card {
+            background: rgba(14, 18, 14, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid #2a2a2a;
+            padding: 20px 18px;
+            transition: 0.2s;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+        }
+        .map-card:hover {
+            border-color: #666;
+            background: #1a1a1a;
+            transform: translateY(-3px);
+        }
+        .map-card .map-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #d8d8d8;
+            letter-spacing: 0.5px;
+        }
+        .map-card .map-status {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .map-card .map-status.ranked {
+            color: #4aaa4a;
+        }
+        .map-card .map-status.casual {
+            color: #aa8a3a;
+        }
+        .map-card .map-status.pro {
+            color: #4aaaaa;
+        }
+        .map-card .map-detail {
+            font-size: 0.9rem;
+            color: #999;
+            font-weight: 300;
+            margin-top: 6px;
+        }
+        .map-card .map-tag {
+            display: inline-block;
+            background: #1f1f1f;
+            padding: 2px 14px;
+            font-size: 10px;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid #2a2a2a;
+            margin-top: 10px;
+        }
+
+        .site-footer {
+            background: rgba(8, 10, 8, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 28px 0;
+            text-align: center;
+            color: #3a4a3a;
+            font-size: 12px;
+            border-top: 1px solid rgba(42, 74, 42, 0.15);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        .site-footer strong {
+            color: #5a7a5a;
+            font-weight: 600;
+        }
+        .site-footer .divider {
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: #2a3a2a;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            .header-inner {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .logo {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .content {
+                padding: 0 16px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="waveCanvas"></canvas>
+    <div class="overlay"></div>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-icon">⛭</span>
+                <span class="logo-text">R6 INFILTRATOR</span>
+                <span class="logo-sub">TACTICAL + UNDERGROUND</span>
+            </div>
+            <nav class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="seasons.html">Seasons</a>
+                <a href="operators.html">Operators</a>
+                <a href="maps.html" class="active">Maps</a>
+                <a href="esports.html">Esports</a>
+                <a href="strategy.html">Strategy</a>
+                <a href="../cheats/index.html" class="danger">⚡ Cheats</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <h1 class="page-title">Map <span>Directory</span></h1>
+
+        <div class="map-grid">
+            <div class="map-card">
+                <div class="map-name">Yacht</div>
+                <div class="map-status casual">Casual</div>
+                <div class="map-detail">Frozen luxury vessel in the Arctic. Tight corridors and multiple vertical levels.</div>
+                <div class="map-tag">Close Quarters · Vertical</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Border</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Middle Eastern border crossing. Multiple entry points and exterior catwalks.</div>
+                <div class="map-tag">Open · Intel</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Favela</div>
+                <div class="map-status casual">Casual</div>
+                <div class="map-detail">Brazilian favela with tight alleys, multiple floors, and destructible walls.</div>
+                <div class="map-tag">Destruction · Close</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Skyscraper</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Japanese skyscraper with exterior balconies, courtyards, and multiple entrances.</div>
+                <div class="map-tag">Vertical · Runouts</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Coastline</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Mediterranean resort with open-air sights, multiple entry points, and good vertical play.</div>
+                <div class="map-tag">Open · Verticals</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Theme Park</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Abandoned amusement park with dark corridors, multiple bomb sites, and unique angles.</div>
+                <div class="map-tag">Complex · Intel</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Tower</div>
+                <div class="map-status casual">Casual</div>
+                <div class="map-detail">Massive office tower with glass walls, interior catwalks, and long sightlines.</div>
+                <div class="map-tag">Long Range · Glass</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Villa</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Italian villa with multiple floors, exterior gardens, and rotatable bomb sites.</div>
+                <div class="map-tag">Complex · Rotations</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Hereford Base (Rework)</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Massive military training facility with multiple floors, exterior runs, and unique angles.</div>
+                <div class="map-tag">Large · Tactical</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Fortress</div>
+                <div class="map-status casual">Casual</div>
+                <div class="map-detail">Moroccan fortress with labyrinth corridors, multiple staircases, and varied bomb sites.</div>
+                <div class="map-tag">Labyrinth · Anchor</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Outback</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Australian roadhouse with unique vertical breaks, garage, and open-air sections.</div>
+                <div class="map-tag">Vertical · Breach</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Kanal (Rework)</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Reworked naval canal with improved rotations, bomb sites, and vertical gameplay.</div>
+                <div class="map-tag">Rotations · Anchor</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Emerald Plains</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Beautiful Irish estate with tight corridors, open courtyards, and multiple levels.</div>
+                <div class="map-tag">Close · Vertical</div>
+            </div>
+            <div class="map-card">
+                <div class="map-name">Calypso Casino</div>
+                <div class="map-status ranked">Ranked</div>
+                <div class="map-detail">Vegas-themed casino with sprawling interiors, multiple entry points, and unique bomb sites.</div>
+                <div class="map-tag">Complex · Intel</div>
+            </div>
+        </div>
+
+        <p style="color:#5a6a5a; font-size:0.9rem; margin-top:20px; text-align:center;">Plus more maps in rotation – including reworks and special event maps.</p>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p><strong>R6 INFILTRATOR</strong> <span class="divider"></span> Unofficial Tactical & Underground Dossier <span class="divider"></span> Built with Extreme Prejudice</p>
+            <p style="margin-top:6px; font-size:10px; color:#2a3a2a;">All trademarks belong to Ubisoft. Data sourced from official channels.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('waveCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height, time = 0;
+            const waves = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            function initWaves() {
+                for (let i = 0; i < 5; i++) {
+                    waves.push({
+                        amplitude: 15 + Math.random() * 35,
+                        frequency: 0.008 + Math.random() * 0.012,
+                        speed: 0.4 + Math.random() * 0.6,
+                        phase: Math.random() * Math.PI * 2,
+                        color: `hsla(${140 + Math.random() * 20}, ${30 + Math.random() * 30}%, ${15 + Math.random() * 20}%, ${0.15 + Math.random() * 0.25})`,
+                        thickness: 1.5 + Math.random() * 2
+                    });
+                }
+            }
+
+            function drawWaves() {
+                ctx.clearRect(0, 0, width, height);
+                const gradient = ctx.createLinearGradient(0, 0, 0, height);
+                gradient.addColorStop(0, '#0a1a0f');
+                gradient.addColorStop(0.4, '#0d1f12');
+                gradient.addColorStop(0.7, '#0a1a0f');
+                gradient.addColorStop(1, '#050d08');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, width, height);
+
+                for (let w = 0; w < waves.length; w++) {
+                    const wave = waves[w];
+                    ctx.beginPath();
+                    for (let x = 0; x <= width; x += 1) {
+                        const y = height * 0.65 +
+                            Math.sin(x * wave.frequency + time * wave.speed + wave.phase) * wave.amplitude +
+                            Math.sin(x * wave.frequency * 2.3 + time * wave.speed * 0.7 + wave.phase * 1.4) * (wave.amplitude * 0.3) +
+                            Math.sin(x * wave.frequency * 0.5 + time * wave.speed * 0.3 + wave.phase * 0.8) * (wave.amplitude * 0.5);
+                        if (x === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    const grad = ctx.createLinearGradient(0, height * 0.5, 0, height);
+                    const alpha = 0.15 + (w / waves.length) * 0.25;
+                    grad.addColorStop(0, `rgba(20, 50, 30, ${alpha * 0.3})`);
+                    grad.addColorStop(0.5, `rgba(15, 40, 25, ${alpha * 0.6})`);
+                    grad.addColorStop(1, `rgba(5, 15, 10, ${alpha * 0.9})`);
+                    ctx.lineTo(width, height);
+                    ctx.lineTo(0, height);
+                    ctx.closePath();
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+                    ctx.strokeStyle = wave.color;
+                    ctx.lineWidth = wave.thickness;
+                    ctx.shadowColor = 'rgba(29, 185, 84, 0.05)';
+                    ctx.shadowBlur = 10;
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+                }
+                const fogGrad = ctx.createLinearGradient(0, height * 0.8, 0, height);
+                fogGrad.addColorStop(0, 'rgba(10, 20, 15, 0)');
+                fogGrad.addColorStop(1, 'rgba(5, 15, 10, 0.5)');
+                ctx.fillStyle = fogGrad;
+                ctx.fillRect(0, height * 0.8, width, height * 0.2);
+                time += 0.008;
+                requestAnimationFrame(drawWaves);
+            }
+            window.addEventListener('resize', resize);
+            resize();
+            initWaves();
+            drawWaves();
+        })();
+    </script>
+</body>
+</html>
