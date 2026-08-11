@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>R6 SIEGE · SEASON ARCHIVE</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI','Arial Narrow',sans-serif;background:#1a1a1a;color:#c8c8c8;line-height:1.6;background-image:repeating-linear-gradient(45deg,rgba(50,50,50,.03)0,rgba(50,50,50,.03)2px,transparent 2px,transparent 6px)}
+        ::-webkit-scrollbar{width:10px;background:#222}
+        ::-webkit-scrollbar-track{background:#1a1a1a}
+        ::-webkit-scrollbar-thumb{background:#555;border-radius:0;border:1px solid #333}
+        .container{max-width:1200px;margin:0 auto;padding:0 28px}
+        .site-header{background:#141414;background-image:linear-gradient(180deg,#1e1e1e 0,#121212 100%),repeating-linear-gradient(0deg,#2a2a2a 0,#2a2a2a 1px,transparent 1px,transparent 4px);padding:16px 0;border-bottom:3px solid #555;box-shadow:0 4px 20px rgba(0,0,0,.8)}
+        .header-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+        .logo{display:flex;align-items:baseline;gap:10px}
+        .logo-icon{font-size:28px;color:#aaa;font-weight:300;letter-spacing:2px}
+        .logo-text{font-size:26px;font-weight:700;color:#d4d4d4;letter-spacing:1px;text-shadow:0 2px 4px rgba(0,0,0,.9);background:linear-gradient(180deg,#e0e0e0 30%,#888 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .logo-sub{font-size:13px;color:#777;font-weight:300;letter-spacing:3px;-webkit-text-fill-color:#777;background:0 0;border-left:1px solid #444;padding-left:12px}
+        .nav-links{display:flex;gap:20px;flex-wrap:wrap;font-weight:500;font-size:13px;letter-spacing:.5px;text-transform:uppercase}
+        .nav-links a{color:#999;text-decoration:none;transition:.2s;padding:4px 0;border-bottom:2px solid transparent}
+        .nav-links a:hover{color:#eee;border-bottom-color:#888;text-decoration:none}
+        .nav-links a.active{color:#fff;border-bottom-color:#888}
+        .page-title{font-size:2.8rem;font-weight:800;letter-spacing:2px;color:#ddd;text-shadow:0 4px 12px rgba(0,0,0,.9);margin:40px 0 20px;text-transform:uppercase;border-left:4px solid #888;padding-left:20px}
+        .page-title span{color:#888;font-weight:300}
+        .year-group{margin-bottom:40px}
+        .year-title{font-size:2rem;font-weight:700;color:#aaa;letter-spacing:2px;border-bottom:2px solid #333;padding-bottom:10px;margin-bottom:20px;text-transform:uppercase}
+        .season-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+        .season-card{background:#141414;border:1px solid #2a2a2a;padding:18px 20px;transition:.2s;box-shadow:inset 0 0 30px rgba(0,0,0,.6)}
+        .season-card:hover{border-color:#666;background:#1a1a1a}
+        .season-card .season-name{font-size:1.2rem;font-weight:700;color:#ddd;letter-spacing:.5px}
+        .season-card .season-meta{font-size:.85rem;color:#888;margin-top:4px}
+        .season-card .season-meta strong{color:#aaa}
+        .season-card .season-detail{font-size:.8rem;color:#666;margin-top:4px}
+        .season-card .season-op{color:#1db954;font-weight:600}
+        .season-card .season-map{color:#ff9800;font-weight:600}
+        .season-card .season-patch{color:#888;font-size:.75rem}
+        .season-card .badge{display:inline-block;background:#1f1f1f;border:1px solid #333;padding:2px 12px;font-size:10px;color:#777;text-transform:uppercase;letter-spacing:.5px;margin-top:6px}
+        .season-card .badge.rework{color:#ff9800;border-color:#ff980033}
+        .season-card .badge.new{color:#1db954;border-color:#1db95433}
+        .season-card .badge.event{color:#e91e63;border-color:#e91e6333}
+        .site-footer{background:#0e0e0e;padding:28px 0;text-align:center;color:#444;font-size:12px;border-top:2px solid #2a2a2a;letter-spacing:.5px;text-transform:uppercase;margin-top:40px}
+        .site-footer strong{color:#777;font-weight:600}
+        .site-footer .divider{display:inline-block;width:20px;height:1px;background:#444;margin:0 10px}
+        @media(max-width:768px){.page-title{font-size:2rem}.season-grid{grid-template-columns:1fr}.header-inner{flex-direction:column;align-items:stretch;text-align:center}.logo{justify-content:center;flex-wrap:wrap}.nav-links{justify-content:center}}
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <span class="logo-icon">⛭</span>
+                <span class="logo-text">RAINBOW SIX</span>
+                <span class="logo-sub">SIEGE</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="seasons.html" class="active">Seasons</a>
+                <a href="operators.html">Operators</a>
+                <a href="maps.html">Maps</a>
+                <a href="esports.html">Esports</a>
+                <a href="strategy.html">Strategy</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Season <span>Archive</span></h1>
+
+        <!-- YEAR 1 -->
+        <div class="year-group">
+            <div class="year-title">Year 1 · 2016</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Black Ice</div><div class="season-meta"><strong>Feb 2016</strong> · Patch 2.0</div><div class="season-detail"><span class="season-op">Frost</span>, <span class="season-op">Buck</span> · <span class="season-map">Yacht</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Dust Line</div><div class="season-meta"><strong>May 2016</strong> · Patch 3.0</div><div class="season-detail"><span class="season-op">Valkyrie</span>, <span class="season-op">Blackbeard</span> · <span class="season-map">Border</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Skull Rain</div><div class="season-meta"><strong>Aug 2016</strong> · Patch 4.0</div><div class="season-detail"><span class="season-op">Caveira</span>, <span class="season-op">Capitão</span> · <span class="season-map">Favela</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Red Crow</div><div class="season-meta"><strong>Nov 2016</strong> · Patch 5.0</div><div class="season-detail"><span class="season-op">Hibana</span>, <span class="season-op">Echo</span> · <span class="season-map">Skyscraper</span></div><div class="badge new">New</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 2 -->
+        <div class="year-group">
+            <div class="year-title">Year 2 · 2017</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Velvet Shell</div><div class="season-meta"><strong>Feb 2017</strong> · Patch 6.0</div><div class="season-detail"><span class="season-op">Mira</span>, <span class="season-op">Jackal</span> · <span class="season-map">Coastline</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Health</div><div class="season-meta"><strong>May 2017</strong> · Patch 7.0</div><div class="season-detail">Technical fixes · No new operators</div><div class="badge event">Tech</div></div>
+                <div class="season-card"><div class="season-name">Operation Blood Orchid</div><div class="season-meta"><strong>Sep 2017</strong> · Patch 8.0</div><div class="season-detail"><span class="season-op">Lesion</span>, <span class="season-op">Ying</span>, <span class="season-op">Ela</span> · <span class="season-map">Theme Park</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation White Noise</div><div class="season-meta"><strong>Dec 2017</strong> · Patch 9.0</div><div class="season-detail"><span class="season-op">Dokkaebi</span>, <span class="season-op">Vigil</span>, <span class="season-op">Zofia</span> · <span class="season-map">Tower</span></div><div class="badge new">New</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 3 -->
+        <div class="year-group">
+            <div class="year-title">Year 3 · 2018</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Chimera</div><div class="season-meta"><strong>Mar 2018</strong> · Patch 10.0</div><div class="season-detail"><span class="season-op">Finka</span>, <span class="season-op">Lion</span> · Outbreak Event</div><div class="badge event">Event</div></div>
+                <div class="season-card"><div class="season-name">Operation Para Bellum</div><div class="season-meta"><strong>Jun 2018</strong> · Patch 11.0</div><div class="season-detail"><span class="season-op">Maestro</span>, <span class="season-op">Alibi</span> · <span class="season-map">Villa</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Grim Sky</div><div class="season-meta"><strong>Sep 2018</strong> · Patch 12.0</div><div class="season-detail"><span class="season-op">Maverick</span>, <span class="season-op">Clash</span> · <span class="season-map">Hereford Base (rework)</span></div><div class="badge rework">Rework</div></div>
+                <div class="season-card"><div class="season-name">Operation Wind Bastion</div><div class="season-meta"><strong>Dec 2018</strong> · Patch 13.0</div><div class="season-detail"><span class="season-op">Nomad</span>, <span class="season-op">Kaid</span> · <span class="season-map">Fortress</span></div><div class="badge new">New</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 4 -->
+        <div class="year-group">
+            <div class="year-title">Year 4 · 2019</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Burnt Horizon</div><div class="season-meta"><strong>Mar 2019</strong> · Patch 14.0</div><div class="season-detail"><span class="season-op">Gridlock</span>, <span class="season-op">Mozzie</span> · <span class="season-map">Outback</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Phantom Sight</div><div class="season-meta"><strong>Jun 2019</strong> · Patch 15.0</div><div class="season-detail"><span class="season-op">Nøkk</span>, <span class="season-op">Warden</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Ember Rise</div><div class="season-meta"><strong>Sep 2019</strong> · Patch 16.0</div><div class="season-detail"><span class="season-op">Amaru</span>, <span class="season-op">Goyo</span> · <span class="season-map">Kanal (rework)</span></div><div class="badge rework">Rework</div></div>
+                <div class="season-card"><div class="season-name">Operation Shifting Tides</div><div class="season-meta"><strong>Dec 2019</strong> · Patch 17.0</div><div class="season-detail"><span class="season-op">Kali</span>, <span class="season-op">Wamai</span> · <span class="season-map">Theme Park (rework)</span></div><div class="badge rework">Rework</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 5 -->
+        <div class="year-group">
+            <div class="year-title">Year 5 · 2020</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Void Edge</div><div class="season-meta"><strong>Mar 2020</strong> · Patch 18.0</div><div class="season-detail"><span class="season-op">Iana</span>, <span class="season-op">Oryx</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Steel Wave</div><div class="season-meta"><strong>Jun 2020</strong> · Patch 19.0</div><div class="season-detail"><span class="season-op">Ace</span>, <span class="season-op">Melusi</span> · <span class="season-map">House (rework)</span></div><div class="badge rework">Rework</div></div>
+                <div class="season-card"><div class="season-name">Operation Shadow Legacy</div><div class="season-meta"><strong>Sep 2020</strong> · Patch 20.0</div><div class="season-detail"><span class="season-op">Zero</span> · <span class="season-map">Chalet (rework)</span></div><div class="badge rework">Rework</div></div>
+                <div class="season-card"><div class="season-name">Operation Neon Dawn</div><div class="season-meta"><strong>Dec 2020</strong> · Patch 21.0</div><div class="season-detail"><span class="season-op">Aruni</span></div><div class="badge new">New</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 6 -->
+        <div class="year-group">
+            <div class="year-title">Year 6 · 2021</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Crimson Heist</div><div class="season-meta"><strong>Mar 2021</strong> · Patch 22.0</div><div class="season-detail"><span class="season-op">Flores</span> · <span class="season-map">Border (rework)</span></div><div class="badge rework">Rework</div></div>
+                <div class="season-card"><div class="season-name">Operation North Star</div><div class="season-meta"><strong>Jun 2021</strong> · Patch 23.0</div><div class="season-detail"><span class="season-op">Thunderbird</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Crystal Guard</div><div class="season-meta"><strong>Sep 2021</strong> · Patch 24.0</div><div class="season-detail"><span class="season-op">Osa</span> · Coastline, Bank, Clubhouse (reworks)</div><div class="badge rework">Rework</div></div>
+                <div class="season-card"><div class="season-name">Operation High Calibre</div><div class="season-meta"><strong>Dec 2021</strong> · Patch 25.0</div><div class="season-detail"><span class="season-op">Thorn</span></div><div class="badge new">New</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 7 -->
+        <div class="year-group">
+            <div class="year-title">Year 7 · 2022</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Demon Veil</div><div class="season-meta"><strong>Mar 2022</strong> · Patch 26.0</div><div class="season-detail"><span class="season-op">Azami</span> · <span class="season-map">Emerald Plains</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Vector Glare</div><div class="season-meta"><strong>Jun 2022</strong> · Patch 27.0</div><div class="season-detail"><span class="season-op">Sens</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Brutal Swarm</div><div class="season-meta"><strong>Sep 2022</strong> · Patch 28.0</div><div class="season-detail"><span class="season-op">Grim</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Solar Raid</div><div class="season-meta"><strong>Dec 2022</strong> · Patch 29.0</div><div class="season-detail"><span class="season-op">Solis</span></div><div class="badge new">New</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 8 -->
+        <div class="year-group">
+            <div class="year-title">Year 8 · 2023</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Commanding Force</div><div class="season-meta"><strong>Mar 2023</strong> · Patch 30.0</div><div class="season-detail"><span class="season-op">Brava</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Dread Factor</div><div class="season-meta"><strong>Jun 2023</strong> · Patch 31.0</div><div class="season-detail"><span class="season-op">Fenrir</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Heavy Mettle</div><div class="season-meta"><strong>Sep 2023</strong> · Patch 32.0</div><div class="season-detail"><span class="season-op">Ram</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Deep Freeze</div><div class="season-meta"><strong>Dec 2023</strong> · Patch 33.0</div><div class="season-detail"><span class="season-op">Tubarão</span></div><div class="badge new">New</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 9 -->
+        <div class="year-group">
+            <div class="year-title">Year 9 · 2024</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Deadly Omen</div><div class="season-meta"><strong>Mar 2024</strong> · Patch 34.0</div><div class="season-detail"><span class="season-op">Deimos</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation New Blood</div><div class="season-meta"><strong>Jun 2024</strong> · Patch 35.0</div><div class="season-detail">Core gameplay updates</div><div class="badge event">Update</div></div>
+                <div class="season-card"><div class="season-name">Operation Twin Shells</div><div class="season-meta"><strong>Sep 2024</strong> · Patch 36.0</div><div class="season-detail"><span class="season-op">Skopós</span></div><div class="badge new">New</div></div>
+                <div class="season-card"><div class="season-name">Operation Collision Point</div><div class="season-meta"><strong>Dec 2024</strong> · Patch 37.0</div><div class="season-detail">Year 10 prep</div><div class="badge event">Update</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 10 -->
+        <div class="year-group">
+            <div class="year-title">Year 10 · 2025</div>
+            <div class="season-grid">
+                <div class="season-card"><div class="season-name">Operation Prep Phase</div><div class="season-meta"><strong>Mar 2025</strong> · Patch 38.0</div><div class="season-detail">Infrastructure updates</div><div class="badge event">Update</div></div>
+                <div class="season-card"><div class="season-name">Operation X</div><div class="season-meta"><strong>Jun 2025</strong> · Patch 39.0</div><div class="season-detail">Siege X prep</div><div class="badge event">Update</div></div>
+                <div class="season-card"><div class="season-name">Operation Siege X</div><div class="season-meta"><strong>Sep 2025</strong> · Patch 40.0</div><div class="season-detail">10th Anniversary · Visual overhaul · Crossplay</div><div class="badge event">Major</div></div>
+                <div class="season-card"><div class="season-name">Operation Final Sunset</div><div class="season-meta"><strong>Dec 2025</strong> · Patch 41.0</div><div class="season-detail">Year 10 finale</div><div class="badge event">Update</div></div>
+            </div>
+        </div>
+
+        <!-- YEAR 11 -->
+        <div class="year-group">
+            <div class="year-title">Year 11 · 2026</div>
+            <div class="season-grid">
+                <div class="season-card" style="border-color:#1db954;"><div class="season-name" style="color:#1db954;">Operation Silent Hunt</div><div class="season-meta"><strong>Mar 2026</strong> · Patch 42.0</div><div class="season-detail"><span class="season-op" style="color:#1db954;">Solid Snake</span> · Intel-gathering gadget · TACIT .45</div><div class="badge new" style="border-color:#1db954;color:#1db954;">LIVE</div></div>
+                <div class="season-card"><div class="season-name">Operation Collision Point</div><div class="season-meta"><strong>Jun 2026</strong> · Patch 43.0</div><div class="season-detail"><span class="season-op">Dokkaebi (rework)</span> · <span class="season-map">Calypso Casino</span></div><div class="badge new">Upcoming</div></div>
+                <div class="season-card"><div class="season-name">Operation TBA</div><div class="season-meta"><strong>Sep 2026</strong> · Patch 44.0</div><div class="season-detail">New Defender · Counter-shield operator</div><div class="badge event">TBA</div></div>
+                <div class="season-card"><div class="season-name">Operation Social HUB</div><div class="season-meta"><strong>Dec 2026</strong> · Patch 45.0</div><div class="season-detail">Social space · Hostage rework</div><div class="badge event">TBA</div></div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p><strong>RAINBOW SIX SIEGE</strong> <span class="divider"></span> Unofficial Tactical Dossier <span class="divider"></span> Built with Extreme Prejudice</p>
+            <p style="margin-top:6px;font-size:10px;color:#333;">All trademarks belong to Ubisoft. Data sourced from official channels.</p>
+        </div>
+    </footer>
+</body>
+</html>
